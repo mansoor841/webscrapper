@@ -1,0 +1,48 @@
+﻿using Flurl.Http;
+using Scraping.Common.Interfaces;
+
+namespace webscrapper.plugins.common.Abstractions;
+
+public class BaseWebScraper : IWebScraper, IDisposable
+{
+    private CookieJar _cookieJar = new();
+
+    public BaseWebScraper() { }
+
+    public async Task<string> GetAsync(string url, Dictionary<string, string>? queryParams = null, CancellationToken cancellationToken = default)
+    {
+        var request = url.WithCookies(_cookieJar);
+
+        if (queryParams != null)
+        {
+            request = request.SetQueryParams(queryParams);
+        }
+
+        return await request.GetStringAsync(cancellationToken: cancellationToken);
+    }
+
+    public async Task<string> PostAsync(string url, Dictionary<string, string> formData, CancellationToken cancellationToken = default)
+    {
+        return await url
+            .WithCookies(_cookieJar)
+            .PostJsonAsync(formData, cancellationToken: cancellationToken)
+            .ReceiveString();
+    }
+
+    public async Task<string> PostUrlEncodedAsync(string url, Dictionary<string, string> formData, CancellationToken cancellationToken = default)
+    {
+        var filteredData = formData
+            .Where(p => !string.IsNullOrEmpty(p.Key) && !string.IsNullOrEmpty(p.Value))
+            .ToDictionary(x => x.Key, x => x.Value);
+
+        return await url
+            .WithCookies(out _cookieJar)
+            .PostUrlEncodedAsync(filteredData, cancellationToken: cancellationToken)
+            .ReceiveString();
+    }
+
+    public void Dispose()
+    {
+        GC.SuppressFinalize(this);
+    }
+}

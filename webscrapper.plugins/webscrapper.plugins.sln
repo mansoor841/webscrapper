@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "webscrapper.plugins.venture
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "venture", "venture", "{6F6E25AB-06F8-4D29-BCAD-AA2430466997}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "common", "common", "{749C1349-A671-4B3A-906F-09B8854DEC60}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "webscrapper.plugins.common", "webscrapper.plugins.common\webscrapper.plugins.common.csproj", "{8F3031C1-66A1-269B-32C9-333A8609B5D2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,12 +21,17 @@ Global
 		{C4BF4BC3-D189-43F3-5DE3-22AC553B6517}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C4BF4BC3-D189-43F3-5DE3-22AC553B6517}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C4BF4BC3-D189-43F3-5DE3-22AC553B6517}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F3031C1-66A1-269B-32C9-333A8609B5D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F3031C1-66A1-269B-32C9-333A8609B5D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F3031C1-66A1-269B-32C9-333A8609B5D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F3031C1-66A1-269B-32C9-333A8609B5D2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{C4BF4BC3-D189-43F3-5DE3-22AC553B6517} = {6F6E25AB-06F8-4D29-BCAD-AA2430466997}
+		{8F3031C1-66A1-269B-32C9-333A8609B5D2} = {749C1349-A671-4B3A-906F-09B8854DEC60}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {72805F42-3D23-4CC3-9BC2-7E772AC3372F}

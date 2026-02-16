@@ -21,23 +21,14 @@ public class ReportTask : BaseHtmlScrapingTask
 
     protected override async Task<object> ExecuteCoreAsync(CancellationToken cancellationToken)
     {
-        var reportParams = new ReportParameters
-        {
-            View = Context.Configuration.GetValueOrDefault("view", "reports_CFML"),
-            ReportId = Context.Configuration.GetValueOrDefault("rpt", "314"),
-            ReportType = Context.Configuration.GetValueOrDefault("ReportType", "ShowHTML"),
-            StartDate = Context.Configuration.GetValueOrDefault("ReportStart", "01/01/2026"),
-            EndDate = Context.Configuration.GetValueOrDefault("ReportEnd", "01/31/2026"),
-            DateSelect = Context.Configuration.GetValueOrDefault("DateSelect", "LastMonth")
-        };
         var queryParams = new Dictionary<string, string>
         {
-            ["view"] = reportParams.View,
-            ["rpt"] = reportParams.ReportId,
-            ["ReportType"] = reportParams.ReportType,
-            ["ReportStart"] = reportParams.StartDate,
-            ["ReportEnd"] = reportParams.EndDate,
-            ["DateSelect"] = reportParams.DateSelect
+            ["view"] = Context.Configuration.GetValueOrDefault("view", ""),
+            ["rpt"] = Context.Configuration.GetValueOrDefault("rpt", ""),
+            ["ReportType"] = Context.Configuration.GetValueOrDefault("ReportType", ""),
+            ["ReportStart"] = Context.Configuration.GetValueOrDefault("ReportStart", ""),
+            ["ReportEnd"] = Context.Configuration.GetValueOrDefault("ReportEnd", ""),
+            ["DateSelect"] = Context.Configuration.GetValueOrDefault("DateSelect", "")
         };
         var mainUrl = $"{_settings.BaseUrl}{_settings.MainPath}";
         var html = await Context.Scraper.GetAsync(mainUrl, queryParams, cancellationToken);
@@ -52,13 +43,13 @@ public class ReportTask : BaseHtmlScrapingTask
         var payments = new List<PaymentModel>();
         var columnNames = new[]
         {
-            "BatchType", "BatchUserID", "BatchUserName", "PaymentDate",
-            "Policy", "NamedInsured", "HowPaid", "Amount", "BatchNumber", "AgentID"
+            "BatchType", "BatchUserID", "BatchUserName", "PaymentDate", "Policy", "NamedInsured", "HowPaid", "Amount", "BatchNumber", "AgentID"
         };
 
-        foreach (var row in pmntTable.QuerySelectorAll("tr").Skip(1)) // Skip header
+        foreach (var row in pmntTable.QuerySelectorAll("tr").Skip(1))
         {
             var rowData = row.GetTableRowData(columnNames);
+
             if (rowData.Count > 0)
             {
                 payments.Add(new PaymentModel
@@ -81,7 +72,7 @@ public class ReportTask : BaseHtmlScrapingTask
         {
             Payments = payments,
             GeneratedAt = DateTime.UtcNow,
-            Parameters = reportParams
+            Parameters = queryParams
         };
     }
 }

@@ -23,7 +23,7 @@ public class AuthenticationTask : BaseAuthenticationTask
         try
         {
             var loginUrl = $"{_settings.BaseUrl}{_settings.LoginPath}";
-            var html = await Context.Scraper.GetAsync(loginUrl);
+            var html = await Context.Scraper.GetAsync(loginUrl, cancellationToken: cancellationToken);
             var parser = new AngleSharp.Html.Parser.HtmlParser();
             var document = await parser.ParseDocumentAsync(html, cancellationToken);
             var formData = document.ExtractFormData();

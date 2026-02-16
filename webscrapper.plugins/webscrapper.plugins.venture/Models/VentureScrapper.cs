@@ -15,7 +15,7 @@ public class VentureScrapper : BaseWebScraper
         _settings = new PluginSettings();
     }
 
-    public async void RunAsync(CancellationToken cancellationToken = default)
+    public async Task<bool> RunAsync(CancellationToken cancellationToken = default)
     {
         var context = new TaskContext
         {
@@ -36,7 +36,7 @@ public class VentureScrapper : BaseWebScraper
         if (!authResult.IsAuthenticated)
         {
             Console.WriteLine($"Authentication failed: {authResult.ErrorMessage}");
-            return;
+            return false;
         }
 
         Console.WriteLine("Authentication successful");
@@ -55,12 +55,14 @@ public class VentureScrapper : BaseWebScraper
 
         if (result.Success)
         {
-            Console.WriteLine("Scraping completed successfully");
+            Console.WriteLine("Report Data Scraping completed successfully");
         }
         else
         {
             Console.WriteLine($"Scraping failed: {result.ErrorMessage}");
         }
+
+        return true;
     }
 }
 

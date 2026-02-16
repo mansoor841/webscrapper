@@ -2,4 +2,4 @@
 
 var scrapper = new VentureScrapper();
 
-scrapper.RunAsync();
+await scrapper.RunAsync();

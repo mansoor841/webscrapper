@@ -1,4 +1,4 @@
-﻿namespace webscrapper.plugins.venture.Tasks.ReportTask.Models;
+﻿namespace webscrapper.plugins.venture.tasks.eod_report.models;
 
 public class PaymentModel
 {

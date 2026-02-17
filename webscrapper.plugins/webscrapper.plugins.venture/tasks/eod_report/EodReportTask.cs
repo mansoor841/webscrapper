@@ -2,8 +2,8 @@
 using webscrapper.plugins.common.interfaces;
 using webscrapper.plugins.common.shared;
 using webscrapper.plugins.venture.shared;
+using webscrapper.plugins.venture.tasks.eod_report.models;
 using webscrapper.plugins.venture.tasks.eod_report.shared;
-using webscrapper.plugins.venture.Tasks.ReportTask.Models;
 
 namespace webscrapper.plugins.venture.tasks.eod_report;
 

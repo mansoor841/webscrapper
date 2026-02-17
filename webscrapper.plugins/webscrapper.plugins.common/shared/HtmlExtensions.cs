@@ -1,7 +1,7 @@
 ﻿using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 
-namespace Scraping.Common.Extensions;
+namespace webscrapper.plugins.common.shared;
 
 public static class HtmlExtensions
 {

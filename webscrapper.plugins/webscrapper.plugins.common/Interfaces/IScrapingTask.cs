@@ -1,9 +1,9 @@
-﻿using Scraping.Common.Models;
+﻿using webscrapper.plugins.common.models;
 
-namespace Scraping.Common.Interfaces;
+namespace webscrapper.plugins.common.interfaces;
 
 public interface IScrapingTask
 {
     string TaskName { get; }
-    Task<ScrapingResult> ExecuteAsync(CancellationToken cancellationToken = default);
+    Task<TaskResult> ExecuteAsync(CancellationToken cancellationToken = default);
 }

@@ -1,11 +1,15 @@
-﻿using Flurl.Http;
-using Scraping.Common.Interfaces;
+﻿using AngleSharp.Html.Dom;
+using AngleSharp.Html.Parser;
+using Flurl.Http;
+using webscrapper.plugins.common.interfaces;
+using webscrapper.plugins.common.models;
 
-namespace webscrapper.plugins.common.Abstractions;
+namespace webscrapper.plugins.common.classes;
 
-public class BaseWebScraper : IWebScraper, IDisposable
+public abstract class BaseWebScraper : IWebScraper, IDisposable
 {
-    private CookieJar _cookieJar = new();
+    protected CookieJar _cookieJar = new();
+    protected HtmlParser _htmlParser { get; } = new();
 
     public BaseWebScraper() { }
 
@@ -40,6 +44,13 @@ public class BaseWebScraper : IWebScraper, IDisposable
             .PostUrlEncodedAsync(filteredData, cancellationToken: cancellationToken)
             .ReceiveString();
     }
+
+    public async Task<IHtmlDocument> ParseHtmlAsync(string html, CancellationToken cancellationToken = default)
+    {
+        return await _htmlParser.ParseDocumentAsync(html, cancellationToken);
+    }
+
+    public abstract Task<PluginOutput> RunAsync(PluginInput inputModel, CancellationToken cancellationToken = default);
 
     public void Dispose()
     {

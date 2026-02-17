@@ -1,44 +1,38 @@
-﻿using Scraping.Common.Abstractions;
-using Scraping.Common.Extensions;
-using Scraping.Common.Models;
-using Scraping.Plugins.Venture.Configuration;
+﻿using webscrapper.plugins.common.classes;
+using webscrapper.plugins.common.interfaces;
+using webscrapper.plugins.common.shared;
+using webscrapper.plugins.venture.shared;
+using webscrapper.plugins.venture.tasks.eod_report.shared;
 using webscrapper.plugins.venture.Tasks.ReportTask.Models;
 
-namespace webscrapper.plugins.venture.Tasks.ReportTask;
+namespace webscrapper.plugins.venture.tasks.eod_report;
 
-public class ReportTask : BaseHtmlScrapingTask
+public class EodReportTask : BaseScrapingTask
 {
-    private readonly PluginSettings _settings;
+    public override string TaskName => "venture.eod_report_task";
 
-    public override TaskContext Context { get; set; }
-    public override string TaskName => "venture.report_task";
-
-    public ReportTask(TaskContext context, PluginSettings settings)
+    public EodReportTask(IWebScraper _webScraper)
     {
-        Context = context;
-        _settings = settings;
+        webScraper = _webScraper;
     }
 
     protected override async Task<object> ExecuteCoreAsync(CancellationToken cancellationToken)
     {
         var queryParams = new Dictionary<string, string>
         {
-            ["view"] = Context.Configuration.GetValueOrDefault("view", ""),
-            ["rpt"] = Context.Configuration.GetValueOrDefault("rpt", ""),
-            ["ReportType"] = Context.Configuration.GetValueOrDefault("ReportType", ""),
-            ["ReportStart"] = Context.Configuration.GetValueOrDefault("ReportStart", ""),
-            ["ReportEnd"] = Context.Configuration.GetValueOrDefault("ReportEnd", ""),
-            ["DateSelect"] = Context.Configuration.GetValueOrDefault("DateSelect", "")
+            ["view"] = EodConstants.View,
+            ["rpt"] = EodConstants.Rpt,
+            ["ReportType"] = EodConstants.ReportType,
+            ["ReportStart"] = AppConstants.InputModel.StartDate,
+            ["ReportEnd"] = AppConstants.InputModel.EndDate,
+            ["DateSelect"] = EodConstants.DateSelect
         };
-        var mainUrl = $"{_settings.BaseUrl}{_settings.MainPath}";
-        var html = await Context.Scraper.GetAsync(mainUrl, queryParams, cancellationToken);
-        var document = await ParseHtmlAsync(html);
-
+        var mainUrl = $"{AppConstants.InputModel.BaseUrl}{AppConstants.MainPath}";
+        var html = await webScraper.GetAsync(mainUrl, queryParams, cancellationToken);
+        var document = await webScraper.ParseHtmlAsync(html, cancellationToken);
         var pmntTable = document.QuerySelector(".PmntTable");
-        if (pmntTable == null)
-        {
-            throw new InvalidOperationException("Payment table not found");
-        }
+
+        if (pmntTable == null) throw new InvalidOperationException("Payment Table Not Found");
 
         var payments = new List<PaymentModel>();
         var columnNames = new[]
@@ -68,11 +62,6 @@ public class ReportTask : BaseHtmlScrapingTask
             }
         }
 
-        return new ReportResult
-        {
-            Payments = payments,
-            GeneratedAt = DateTime.UtcNow,
-            Parameters = queryParams
-        };
+        return payments;
     }
 }

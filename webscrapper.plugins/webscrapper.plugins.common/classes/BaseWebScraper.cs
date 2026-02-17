@@ -1,4 +1,5 @@
-﻿using AngleSharp.Html.Dom;
+﻿using AngleSharp;
+using AngleSharp.Html.Dom;
 using AngleSharp.Html.Parser;
 using Flurl.Http;
 using webscrapper.plugins.common.interfaces;
@@ -10,8 +11,16 @@ public abstract class BaseWebScraper : IWebScraper, IDisposable
 {
     protected CookieJar _cookieJar = new();
     protected HtmlParser _htmlParser { get; } = new();
+    protected IBrowsingContext context { get; set; }
 
-    public BaseWebScraper() { }
+    public BaseWebScraper()
+    {
+        var config = Configuration.Default
+            .WithJs()
+            .WithDefaultLoader();
+
+        context = BrowsingContext.New(config);
+    }
 
     public async Task<string> GetAsync(string url, Dictionary<string, string>? queryParams = null, CancellationToken cancellationToken = default)
     {
@@ -47,6 +56,8 @@ public abstract class BaseWebScraper : IWebScraper, IDisposable
 
     public async Task<IHtmlDocument> ParseHtmlAsync(string html, CancellationToken cancellationToken = default)
     {
+        //return await context.OpenAsync(req => req.Content(html));
+
         return await _htmlParser.ParseDocumentAsync(html, cancellationToken);
     }
 

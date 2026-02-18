@@ -1,4 +1,5 @@
 ﻿using AngleSharp;
+using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using AngleSharp.Html.Parser;
 using Flurl.Http;
@@ -56,9 +57,12 @@ public abstract class BaseWebScraper : IWebScraper, IDisposable
 
     public async Task<IHtmlDocument> ParseHtmlAsync(string html, CancellationToken cancellationToken = default)
     {
-        //return await context.OpenAsync(req => req.Content(html));
-
         return await _htmlParser.ParseDocumentAsync(html, cancellationToken);
+    }
+
+    public async Task<IDocument> ParseDocumentAsync(string html, CancellationToken cancellationToken = default)
+    {
+        return await context.OpenAsync(req => req.Content(html), cancellationToken);
     }
 
     public abstract Task<PluginOutput> RunAsync(PluginInput inputModel, CancellationToken cancellationToken = default);

@@ -31,7 +31,7 @@ public class EodReportTask : BaseScrapingTask
         };
         var mainUrl = $"{AppConstants.InputModel.BaseUrl}{AppConstants.MainPath}";
         var html = await webScraper.GetAsync(mainUrl, queryParams, cancellationToken);
-        /*
+        
         var document1 = await webScraper.ParseDocumentAsync(html, cancellationToken);
         var assembly = Assembly.GetExecutingAssembly();
         var resourceName = GetType().Namespace + ".scripts.getReportData.js";
@@ -48,7 +48,7 @@ public class EodReportTask : BaseScrapingTask
         }
 
         var ouput = document1.ExecuteScript(jsScriptContent);
-        */
+        
         var document = await webScraper.ParseHtmlAsync(html, cancellationToken);
         var pmntTable = document.QuerySelector(".PmntTable");
 

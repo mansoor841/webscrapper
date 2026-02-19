@@ -8,19 +8,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="tasks\authentication\scripts\getFormData.js" />
     <None Remove="tasks\eod_report\scripts\getReportData.js" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="tasks\authentication\scripts\getFormData.js" />
     <EmbeddedResource Include="tasks\eod_report\scripts\getReportData.js" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\webscrapper.plugins.common\webscrapper.plugins.common.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="tasks\authentication\scripts\" />
   </ItemGroup>
 
 </Project>

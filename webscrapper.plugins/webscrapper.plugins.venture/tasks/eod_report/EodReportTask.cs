@@ -1,11 +1,11 @@
 ﻿using AngleSharp.Js;
-using System.Reflection;
 using webscrapper.plugins.common.classes;
 using webscrapper.plugins.common.interfaces;
-using webscrapper.plugins.common.shared;
+using webscrapper.plugins.venture.classes;
 using webscrapper.plugins.venture.shared;
 using webscrapper.plugins.venture.tasks.eod_report.models;
 using webscrapper.plugins.venture.tasks.eod_report.shared;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace webscrapper.plugins.venture.tasks.eod_report;
 
@@ -31,57 +31,44 @@ public class EodReportTask : BaseScrapingTask
         };
         var mainUrl = $"{AppConstants.InputModel.BaseUrl}{AppConstants.MainPath}";
         var html = await webScraper.GetAsync(mainUrl, queryParams, cancellationToken);
-        
-        var document1 = await webScraper.ParseDocumentAsync(html, cancellationToken);
-        var assembly = Assembly.GetExecutingAssembly();
-        var resourceName = GetType().Namespace + ".scripts.getReportData.js";
-        var jsScriptContent = string.Empty;
+        var document = await webScraper.ParseDocumentAsync(html, cancellationToken);
+        var jsScriptContent = Utilities.GetJsScript(GetType(), "getReportData.js");
+        var result = document.ExecuteScript(jsScriptContent);
+        var obj = JsonConvert.DeserializeObject<PaymentModel>(json);
 
-        using (Stream stream = assembly.GetManifestResourceStream(resourceName))
-        {
-            if (stream == null) return "File not found inside DLL.";
+        //var document = await webScraper.ParseHtmlAsync(html, cancellationToken);
+        //var pmntTable = document.QuerySelector(".PmntTable");
 
-            using (StreamReader reader = new StreamReader(stream))
-            {
-                jsScriptContent = reader.ReadToEnd();
-            }
-        }
+        //if (pmntTable == null) throw new InvalidOperationException("Payment Table Not Found");
 
-        var ouput = document1.ExecuteScript(jsScriptContent);
-        
-        var document = await webScraper.ParseHtmlAsync(html, cancellationToken);
-        var pmntTable = document.QuerySelector(".PmntTable");
+        //var payments = new List<PaymentModel>();
+        //var columnNames = new[]
+        //{
+        //    "BatchType", "BatchUserID", "BatchUserName", "PaymentDate", "Policy", "NamedInsured", "HowPaid", "Amount", "BatchNumber", "AgentID"
+        //};
 
-        if (pmntTable == null) throw new InvalidOperationException("Payment Table Not Found");
+        //foreach (var row in pmntTable.QuerySelectorAll("tr").Skip(1))
+        //{
+        //    var rowData = row.GetTableRowData(columnNames);
 
-        var payments = new List<PaymentModel>();
-        var columnNames = new[]
-        {
-            "BatchType", "BatchUserID", "BatchUserName", "PaymentDate", "Policy", "NamedInsured", "HowPaid", "Amount", "BatchNumber", "AgentID"
-        };
+        //    if (rowData.Count > 0)
+        //    {
+        //        payments.Add(new PaymentModel
+        //        {
+        //            BatchType = rowData.GetValueOrDefault("BatchType"),
+        //            BatchUserID = rowData.GetValueOrDefault("BatchUserID"),
+        //            BatchUserName = rowData.GetValueOrDefault("BatchUserName"),
+        //            PaymentDate = rowData.GetValueOrDefault("PaymentDate"),
+        //            Policy = rowData.GetValueOrDefault("Policy"),
+        //            NamedInsured = rowData.GetValueOrDefault("NamedInsured"),
+        //            HowPaid = rowData.GetValueOrDefault("HowPaid"),
+        //            Amount = rowData.GetValueOrDefault("Amount"),
+        //            BatchNumber = rowData.GetValueOrDefault("BatchNumber"),
+        //            AgentID = rowData.GetValueOrDefault("AgentID")
+        //        });
+        //    }
+        //}
 
-        foreach (var row in pmntTable.QuerySelectorAll("tr").Skip(1))
-        {
-            var rowData = row.GetTableRowData(columnNames);
-
-            if (rowData.Count > 0)
-            {
-                payments.Add(new PaymentModel
-                {
-                    BatchType = rowData.GetValueOrDefault("BatchType"),
-                    BatchUserID = rowData.GetValueOrDefault("BatchUserID"),
-                    BatchUserName = rowData.GetValueOrDefault("BatchUserName"),
-                    PaymentDate = rowData.GetValueOrDefault("PaymentDate"),
-                    Policy = rowData.GetValueOrDefault("Policy"),
-                    NamedInsured = rowData.GetValueOrDefault("NamedInsured"),
-                    HowPaid = rowData.GetValueOrDefault("HowPaid"),
-                    Amount = rowData.GetValueOrDefault("Amount"),
-                    BatchNumber = rowData.GetValueOrDefault("BatchNumber"),
-                    AgentID = rowData.GetValueOrDefault("AgentID")
-                });
-            }
-        }
-
-        return payments;
+        return null;
     }
 }

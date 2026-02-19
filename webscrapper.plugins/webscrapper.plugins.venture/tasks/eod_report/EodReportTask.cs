@@ -1,4 +1,5 @@
 ﻿using AngleSharp.Js;
+using System.Text.Json;
 using webscrapper.plugins.common.classes;
 using webscrapper.plugins.common.interfaces;
 using webscrapper.plugins.venture.classes;
@@ -34,41 +35,8 @@ public class EodReportTask : BaseScrapingTask
         var document = await webScraper.ParseDocumentAsync(html, cancellationToken);
         var jsScriptContent = Utilities.GetJsScript(GetType(), "getReportData.js");
         var result = document.ExecuteScript(jsScriptContent);
-        var obj = JsonConvert.DeserializeObject<PaymentModel>(json);
+        var payments = JsonSerializer.Deserialize<List<PaymentModel>>(result.ToString());
 
-        //var document = await webScraper.ParseHtmlAsync(html, cancellationToken);
-        //var pmntTable = document.QuerySelector(".PmntTable");
-
-        //if (pmntTable == null) throw new InvalidOperationException("Payment Table Not Found");
-
-        //var payments = new List<PaymentModel>();
-        //var columnNames = new[]
-        //{
-        //    "BatchType", "BatchUserID", "BatchUserName", "PaymentDate", "Policy", "NamedInsured", "HowPaid", "Amount", "BatchNumber", "AgentID"
-        //};
-
-        //foreach (var row in pmntTable.QuerySelectorAll("tr").Skip(1))
-        //{
-        //    var rowData = row.GetTableRowData(columnNames);
-
-        //    if (rowData.Count > 0)
-        //    {
-        //        payments.Add(new PaymentModel
-        //        {
-        //            BatchType = rowData.GetValueOrDefault("BatchType"),
-        //            BatchUserID = rowData.GetValueOrDefault("BatchUserID"),
-        //            BatchUserName = rowData.GetValueOrDefault("BatchUserName"),
-        //            PaymentDate = rowData.GetValueOrDefault("PaymentDate"),
-        //            Policy = rowData.GetValueOrDefault("Policy"),
-        //            NamedInsured = rowData.GetValueOrDefault("NamedInsured"),
-        //            HowPaid = rowData.GetValueOrDefault("HowPaid"),
-        //            Amount = rowData.GetValueOrDefault("Amount"),
-        //            BatchNumber = rowData.GetValueOrDefault("BatchNumber"),
-        //            AgentID = rowData.GetValueOrDefault("AgentID")
-        //        });
-        //    }
-        //}
-
-        return null;
+        return payments;
     }
 }

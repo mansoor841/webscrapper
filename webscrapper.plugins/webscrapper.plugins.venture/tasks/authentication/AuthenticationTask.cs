@@ -14,7 +14,7 @@ public class AuthenticationTask : BaseScrapingTask
         webScraper = _webScraper;
     }
 
-    protected override async Task<object> ExecuteCoreAsync(CancellationToken cancellationToken)
+    protected override async Task<object> ExecuteCoreAsync(CancellationToken cancellationToken = default)
     {
         var loginUrl = $"{AppConstants.InputModel.BaseUrl}{AppConstants.LoginPath}";
         var html = await webScraper.GetAsync(loginUrl, cancellationToken: cancellationToken);

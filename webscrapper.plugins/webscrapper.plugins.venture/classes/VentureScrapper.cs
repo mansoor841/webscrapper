@@ -13,7 +13,7 @@ public class VentureScrapper : BaseWebScraper
 
     public override async Task<PluginOutput> RunAsync(PluginInput inputModel, CancellationToken cancellationToken = default)
     {
-        var stopwatch = Stopwatch.StartNew();
+        long start = Environment.TickCount64;
 
         AppConstants.InputModel = inputModel;
 
@@ -27,10 +27,8 @@ public class VentureScrapper : BaseWebScraper
 
         if (!result.Success)
         {
-            stopwatch.Stop();
-
+            outputModel.ElapsedMs = Environment.TickCount64 - start;
             outputModel.ErrorMessage = result.ErrorMessage;
-            outputModel.Duration = stopwatch.Elapsed;
 
             return outputModel;
         }
@@ -38,18 +36,8 @@ public class VentureScrapper : BaseWebScraper
         var eodTask = new EodReportTask(this);
         result = await eodTask.ExecuteAsync(cancellationToken);
 
-        stopwatch.Stop();
-
-        outputModel.Duration = stopwatch.Elapsed;
-
-        if (result.Success)
-        {
-            outputModel.Data = result.Data;
-        }
-        else
-        {
-            outputModel.ErrorMessage = result.ErrorMessage;
-        }
+        outputModel.ElapsedMs = Environment.TickCount64 - start;
+        outputModel.Data = result.Success ? result.Data : result.ErrorMessage;
 
         return outputModel;
     }

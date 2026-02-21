@@ -19,7 +19,7 @@ public class EodReportTask : BaseScrapingTask
         webScraper = _webScraper;
     }
 
-    protected override async Task<object> ExecuteCoreAsync(CancellationToken cancellationToken)
+    protected override async Task<object> ExecuteCoreAsync(CancellationToken cancellationToken = default)
     {
         var queryParams = new Dictionary<string, string>
         {

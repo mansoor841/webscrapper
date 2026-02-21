@@ -7,5 +7,5 @@ public class PluginOutput
     public object? Data { get; set; }
     public string? ErrorMessage { get; set; }
     public DateTime ExecutedAt { get; init; } = DateTime.UtcNow;
-    public TimeSpan Duration { get; set; }
+    public long ElapsedMs { get; set; }
 }

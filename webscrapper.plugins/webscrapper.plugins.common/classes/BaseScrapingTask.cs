@@ -3,7 +3,7 @@ using webscrapper.plugins.common.models;
 
 namespace webscrapper.plugins.common.classes;
 
-public abstract class BaseScrapingTask : IScrapingTask
+public abstract class BaseScrapingTask : IScrapingTask, IDisposable
 {
     public abstract string TaskName { get; }
 
@@ -23,5 +23,10 @@ public abstract class BaseScrapingTask : IScrapingTask
         }
     }
 
-    protected abstract Task<object> ExecuteCoreAsync(CancellationToken cancellationToken);
+    protected abstract Task<object> ExecuteCoreAsync(CancellationToken cancellationToken = default);
+
+    public void Dispose()
+    {
+        GC.SuppressFinalize(this);
+    }
 }

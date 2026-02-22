@@ -25,6 +25,8 @@ public class VentureScrapper : BaseWebScraper
         var authTask = new AuthenticationTask(this);
         var result = await authTask.ExecuteAsync(cancellationToken);
 
+        outputModel.TaskResults.Add(result);
+
         if (!result.Success)
         {
             outputModel.ElapsedMs = Environment.TickCount64 - start;
@@ -35,6 +37,8 @@ public class VentureScrapper : BaseWebScraper
 
         var eodTask = new EodReportTask(this);
         result = await eodTask.ExecuteAsync(cancellationToken);
+
+        outputModel.TaskResults.Add(result);
 
         outputModel.ElapsedMs = Environment.TickCount64 - start;
         outputModel.Data = result.Success ? result.Data : result.ErrorMessage;

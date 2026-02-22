@@ -17,19 +17,27 @@ public class AuthenticationTask : BaseScrapingTask
     protected override async Task<object> ExecuteCoreAsync(CancellationToken cancellationToken = default)
     {
         var loginUrl = $"{AppConstants.InputModel.BaseUrl}{AppConstants.LoginPath}";
-        var html = await webScraper.GetAsync(loginUrl, cancellationToken: cancellationToken);
-        var document = await webScraper.ParseHtmlAsync(html, cancellationToken);
-        var formData = document.ExtractFormData();
+
+        var html = await ExecuteStepAsync("Fetch Login Page", async () => 
+            await webScraper.GetAsync(loginUrl, cancellationToken: cancellationToken));
+
+        var document = await ExecuteStepAsync("Parse Login Page", async () => 
+            await webScraper.ParseHtmlAsync(html, cancellationToken));
+
+        var formData = await ExecuteStepAsync("Extract Form Data", () => 
+            Task.FromResult(document.ExtractFormData()));
 
         formData["userloginid"] = AppConstants.InputModel.AgentCode;
         formData["userloginname"] = AppConstants.InputModel.Username;
         formData["password"] = AppConstants.InputModel.Password;
 
         var mainUrl = $"{AppConstants.InputModel.BaseUrl}{AppConstants.MainPath}";
-        var result = await webScraper.PostUrlEncodedAsync(mainUrl, formData);
+        
+        var result = await ExecuteStepAsync("Submit Authentication Form", async () => 
+            await webScraper.PostUrlEncodedAsync(mainUrl, formData));
+
         var isAuthenticated = result.Contains("index.cfm?view=logon/logout");
 
         return isAuthenticated ? isAuthenticated : throw new InvalidOperationException("Login Failed");
-
     }
 }

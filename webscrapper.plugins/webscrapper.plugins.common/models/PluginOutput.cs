@@ -6,6 +6,7 @@ public class PluginOutput
     public string? EndDate { get; init; }
     public object? Data { get; set; }
     public string? ErrorMessage { get; set; }
+    public List<TaskResult> TaskResults { get; set; } = new();
     public DateTime ExecutedAt { get; init; } = DateTime.UtcNow;
     public long ElapsedMs { get; set; }
 }

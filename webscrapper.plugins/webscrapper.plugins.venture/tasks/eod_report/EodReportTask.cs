@@ -31,11 +31,21 @@ public class EodReportTask : BaseScrapingTask
             ["DateSelect"] = EodConstants.DateSelect
         };
         var mainUrl = $"{AppConstants.InputModel.BaseUrl}{AppConstants.MainPath}";
-        var html = await webScraper.GetAsync(mainUrl, queryParams, cancellationToken);
-        var document = await webScraper.ParseDocumentAsync(html, cancellationToken);
-        var jsScriptContent = Utilities.GetJsScript(GetType(), "getReportData.js");
-        var result = document.ExecuteScript(jsScriptContent);
-        var payments = JsonSerializer.Deserialize<List<PaymentModel>>(result.ToString());
+
+        var html = await ExecuteStepAsync("Fetch EOD Report Page", async () => 
+            await webScraper.GetAsync(mainUrl, queryParams, cancellationToken));
+
+        var document = await ExecuteStepAsync("Parse EOD Document", async () => 
+            await webScraper.ParseDocumentAsync(html, cancellationToken));
+
+        var jsScriptContent = await ExecuteStepAsync("Load Javascript Extractor", () => 
+            Task.FromResult(Utilities.GetJsScript(GetType(), "getReportData.js")));
+
+        var result = await ExecuteStepAsync("Execute Report Extractor", () => 
+            Task.FromResult(document.ExecuteScript(jsScriptContent)));
+
+        var payments = await ExecuteStepAsync("Deserialize Payments Data", () => 
+            Task.FromResult(JsonSerializer.Deserialize<List<PaymentModel>>(result.ToString())));
 
         return payments;
     }

@@ -22,7 +22,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="tasks\policy_detail\shared\" />
     <Folder Include="tasks\policy_detail\scripts\" />
   </ItemGroup>
 

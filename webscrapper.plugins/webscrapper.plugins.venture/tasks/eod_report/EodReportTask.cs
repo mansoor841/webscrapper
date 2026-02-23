@@ -6,7 +6,6 @@ using webscrapper.plugins.venture.classes;
 using webscrapper.plugins.venture.shared;
 using webscrapper.plugins.venture.tasks.eod_report.models;
 using webscrapper.plugins.venture.tasks.eod_report.shared;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace webscrapper.plugins.venture.tasks.eod_report;
 

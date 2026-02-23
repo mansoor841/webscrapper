@@ -6,31 +6,31 @@ using webscrapper.plugins.venture.classes;
 using webscrapper.plugins.venture.shared;
 using webscrapper.plugins.venture.tasks.eod_report.models;
 using webscrapper.plugins.venture.tasks.eod_report.shared;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+using webscrapper.plugins.venture.tasks.policy_detail.shared;
 
 namespace webscrapper.plugins.venture.tasks.eod_report;
 
-public class PolicyDetail : BaseScrapingTask
+public class PolicyDetailTask : BaseScrapingTask
 {
     public override string TaskName => "venture.policy_detail_task";
 
-    public PolicyDetail(IWebScraper _webScraper)
+    public PolicyDetailTask(IWebScraper _webScraper)
     {
         webScraper = _webScraper;
     }
 
     protected override async Task<object> ExecuteCoreAsync(CancellationToken cancellationToken = default)
     {
-        "SearchValue=VGAO-04172-000&lookuptype=Policy&view=quicksearch&DisplayAcctFrame=Yes&MatchRule=AnyPart&doubleclicksearchcaution=1"
+        //"SearchValue=VGAO-04172-000&lookuptype=Policy&view=quicksearch&DisplayAcctFrame=Yes&MatchRule=AnyPart&doubleclicksearchcaution=1"
 
         var queryParams = new Dictionary<string, string>
         {
-            ["view"] = EodConstants.View,
-            ["rpt"] = EodConstants.Rpt,
-            ["ReportType"] = EodConstants.ReportType,
-            ["ReportStart"] = AppConstants.InputModel.StartDate,
-            ["ReportEnd"] = AppConstants.InputModel.EndDate,
-            ["DateSelect"] = EodConstants.DateSelect
+            ["SearchValue"] = Convert.ToString(AppConstants.InputModel.OtherInputs["SearchValue"]),
+            ["lookuptype"] = PdConstants.LookupType,
+            ["view"] = PdConstants.View,
+            ["DisplayAcctFrame"] = PdConstants.DisplayAcctFrame,
+            ["MatchRule"] = PdConstants.MatchRule,
+            ["doubleclicksearchcaution"] = PdConstants.DoubleClickSearchCaution
         };
         var mainUrl = $"{AppConstants.InputModel.BaseUrl}{AppConstants.MainPath}";
 

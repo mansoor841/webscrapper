@@ -21,4 +21,9 @@
     <ProjectReference Include="..\webscrapper.plugins.common\webscrapper.plugins.common.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="tasks\policy_detail\shared\" />
+    <Folder Include="tasks\policy_detail\scripts\" />
+  </ItemGroup>
+
 </Project>

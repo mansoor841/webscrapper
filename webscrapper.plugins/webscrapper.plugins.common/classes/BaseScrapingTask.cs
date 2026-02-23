@@ -17,11 +17,11 @@ public abstract class BaseScrapingTask : IScrapingTask, IDisposable
         {
             var result = await ExecuteCoreAsync(cancellationToken);
 
-            return TaskResult.SuccessResult(result, _steps);
+            return TaskResult.SuccessResult(TaskName, result, _steps);
         }
         catch (Exception ex)
         {
-            return TaskResult.FailureResult(ex.Message, _steps);
+            return TaskResult.FailureResult(TaskName, ex.Message, _steps);
         }
     }
 

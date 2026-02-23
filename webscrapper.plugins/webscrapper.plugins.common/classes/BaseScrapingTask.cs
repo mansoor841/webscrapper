@@ -31,29 +31,23 @@ public abstract class BaseScrapingTask : IScrapingTask, IDisposable
     {
         var stepResult = new TaskStepResult { StepName = stepName };
         long start = Environment.TickCount64;
+
         try
         {
             var result = await action();
-            stepResult.Success = true;
-            
-            if (result is AngleSharp.Dom.IDocument)
-                stepResult.Data = "DOM Document (Not Serializable)";
-            else if (result is string str && str.Length > 1000)
-                stepResult.Data = str.Substring(0, 500) + "... [truncated]";
-            else
-                stepResult.Data = result; 
 
             return result;
         }
         catch (Exception ex)
         {
-            stepResult.Success = false;
             stepResult.ErrorMessage = ex.Message;
+
             throw;
         }
         finally
         {
             stepResult.ElapsedMs = Environment.TickCount64 - start;
+
             _steps.Add(stepResult);
         }
     }

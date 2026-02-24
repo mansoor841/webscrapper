@@ -25,7 +25,7 @@ public class PolicyDetailTask : BaseScrapingTask
 
         var queryParams = new Dictionary<string, string>
         {
-            ["SearchValue"] = Convert.ToString(AppConstants.InputModel.OtherInputs["SearchValue"]),
+            ["SearchValue"] = Convert.ToString(AppConstants.InputModel.OtherInputs["PolicyNo"]),
             ["lookuptype"] = PdConstants.LookupType,
             ["view"] = PdConstants.View,
             ["DisplayAcctFrame"] = PdConstants.DisplayAcctFrame,
@@ -34,21 +34,21 @@ public class PolicyDetailTask : BaseScrapingTask
         };
         var mainUrl = $"{AppConstants.InputModel.BaseUrl}{AppConstants.MainPath}";
 
-        var html = await ExecuteStepAsync("Fetch EOD Report Page", async () =>
+        var html = await ExecuteStepAsync("Fetch Policy Detail Page", async () =>
             await webScraper.GetAsync(mainUrl, queryParams, cancellationToken));
 
-        var document = await ExecuteStepAsync("Parse EOD Document", async () =>
+        var document = await ExecuteStepAsync("Parse Policy Detail Document", async () =>
             await webScraper.ParseDocumentAsync(html, cancellationToken));
 
-        var jsScriptContent = await ExecuteStepAsync("Load Javascript Extractor", () =>
-            Task.FromResult(Utilities.GetJsScript(GetType(), "getReportData.js")));
+        //var jsScriptContent = await ExecuteStepAsync("Load Javascript Extractor", () =>
+        //    Task.FromResult(Utilities.GetJsScript(GetType(), "getReportData.js")));
 
-        var result = await ExecuteStepAsync("Execute Report Extractor", () =>
-            Task.FromResult(document.ExecuteScript(jsScriptContent)));
+        //var result = await ExecuteStepAsync("Execute Report Extractor", () =>
+        //    Task.FromResult(document.ExecuteScript(jsScriptContent)));
 
-        var payments = await ExecuteStepAsync("Deserialize Payments Data", () =>
-            Task.FromResult(JsonSerializer.Deserialize<List<PaymentModel>>(result.ToString())));
+        //var payments = await ExecuteStepAsync("Deserialize Payments Data", () =>
+        //    Task.FromResult(JsonSerializer.Deserialize<List<PaymentModel>>(result.ToString())));
 
-        return payments;
+        return null;
     }
 }

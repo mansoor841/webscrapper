@@ -1,4 +1,6 @@
-﻿namespace webscrapper.plugins.common.models;
+﻿using webscrapper.plugins.common.classes;
+
+namespace webscrapper.plugins.common.models;
 
 public class PluginInput
 {
@@ -8,6 +10,6 @@ public class PluginInput
     public required string AgentCode { get; init; }
     public required string StartDate { get; init; }
     public required string EndDate { get; init; }
-    JobType
+    public required BaseJobTypeEnum JobType { get; init; }
     public Dictionary<string, object> OtherInputs { get; set; } = new();
 }

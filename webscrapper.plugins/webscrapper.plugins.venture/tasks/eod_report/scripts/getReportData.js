@@ -1,10 +1,9 @@
-var PmntTable = document.querySelector(".PmntTable");
-var trs = PmntTable.querySelectorAll("tbody tr");
-var resultList = [];
+const PmntTable = document.querySelector(".PmntTable");
+const trs = PmntTable.querySelectorAll("tbody tr");
+const resultList = [];
 
 for (var i = 0; i < trs.length; i++) {
-    var tr = trs[i];
-    var tds = tr.querySelectorAll("td");
+    const tds = trs[i].querySelectorAll("td");
 
     if (tds.length > 0) {
         resultList.push({

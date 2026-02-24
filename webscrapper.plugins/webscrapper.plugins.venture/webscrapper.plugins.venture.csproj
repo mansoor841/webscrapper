@@ -10,11 +10,13 @@
   <ItemGroup>
     <None Remove="tasks\authentication\scripts\getFormData.js" />
     <None Remove="tasks\eod_report\scripts\getReportData.js" />
+    <None Remove="tasks\policy_detail\scripts\getPolicyInfo.js" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="tasks\authentication\scripts\getFormData.js" />
     <EmbeddedResource Include="tasks\eod_report\scripts\getReportData.js" />
+    <EmbeddedResource Include="tasks\policy_detail\scripts\getPolicyInfo.js" />
   </ItemGroup>
 
   <ItemGroup>

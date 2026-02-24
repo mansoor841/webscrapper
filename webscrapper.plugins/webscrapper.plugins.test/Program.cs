@@ -11,7 +11,7 @@ var inputModel = new PluginInput()
     AgentCode = "12821015",
     StartDate = "01/01/2026",
     EndDate = "01/31/2026",
-    JobType = VentureJobTypeEnum.UPDATE,
+    JobType = VentureJobTypeEnum.EOD,
     OtherInputs = new Dictionary<string, object>() { ["PolicyNo"] = "VGAO-04172-000" }
 };
 var result = await scrapper.RunAsync(inputModel);

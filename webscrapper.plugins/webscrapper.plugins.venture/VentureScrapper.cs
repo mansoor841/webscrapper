@@ -4,6 +4,8 @@ using webscrapper.plugins.venture.classes;
 using webscrapper.plugins.venture.shared;
 using webscrapper.plugins.venture.tasks.authentication;
 using webscrapper.plugins.venture.tasks.eod_report;
+using webscrapper.plugins.venture.tasks.eod_report.models;
+using webscrapper.plugins.venture.tasks.policy_detail;
 
 namespace webscrapper.plugins.venture;
 
@@ -42,9 +44,17 @@ public class VentureScrapper : BaseWebScraper
 
             outputModel.TaskResults.Add(result.ToMini());
 
-            outputModel.ElapsedMs = Environment.TickCount64 - start;
-            outputModel.Data = result.Data;
-            outputModel.ErrorMessage = result.ErrorMessage;
+            foreach (var payment in (List<PaymentModel>)result.Data)
+            {
+                AppConstants.InputModel.OtherInputs = new Dictionary<string, object>() { ["PolicyNo"] = payment.Policy };
+
+                var pdTask = new PolicyDetailTask(this);
+                var pdResult = await pdTask.ExecuteAsync(cancellationToken);
+
+                payment.PolicyInfo = pdResult.Data;
+
+                outputModel.TaskResults.Add(pdResult.ToMini());
+            }
         }
         else if (AppConstants.InputModel.JobType == VentureJobTypeEnum.UPDATE)
         {
@@ -52,11 +62,11 @@ public class VentureScrapper : BaseWebScraper
             result = await pdTask.ExecuteAsync(cancellationToken);
 
             outputModel.TaskResults.Add(result.ToMini());
-
-            outputModel.ElapsedMs = Environment.TickCount64 - start;
-            outputModel.Data = result.Data;
-            outputModel.ErrorMessage = result.ErrorMessage;
         }
+
+        outputModel.ElapsedMs = Environment.TickCount64 - start;
+        outputModel.Data = result.Data;
+        outputModel.ErrorMessage = result.ErrorMessage;
 
         return outputModel;
     }

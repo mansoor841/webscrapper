@@ -12,4 +12,6 @@ public class PaymentModel
     public string? Amount { get; set; }
     public string? BatchNumber { get; set; }
     public string? AgentID { get; set; }
+
+    public object? PolicyInfo { get; set; }
 }

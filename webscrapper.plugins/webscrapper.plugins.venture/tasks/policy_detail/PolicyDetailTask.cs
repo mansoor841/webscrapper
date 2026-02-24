@@ -4,11 +4,10 @@ using webscrapper.plugins.common.classes;
 using webscrapper.plugins.common.interfaces;
 using webscrapper.plugins.venture.classes;
 using webscrapper.plugins.venture.shared;
-using webscrapper.plugins.venture.tasks.eod_report.models;
-using webscrapper.plugins.venture.tasks.eod_report.shared;
+using webscrapper.plugins.venture.tasks.policy_detail.models;
 using webscrapper.plugins.venture.tasks.policy_detail.shared;
 
-namespace webscrapper.plugins.venture.tasks.eod_report;
+namespace webscrapper.plugins.venture.tasks.policy_detail;
 
 public class PolicyDetailTask : BaseScrapingTask
 {
@@ -21,8 +20,6 @@ public class PolicyDetailTask : BaseScrapingTask
 
     protected override async Task<object> ExecuteCoreAsync(CancellationToken cancellationToken = default)
     {
-        //"SearchValue=VGAO-04172-000&lookuptype=Policy&view=quicksearch&DisplayAcctFrame=Yes&MatchRule=AnyPart&doubleclicksearchcaution=1"
-
         var queryParams = new Dictionary<string, string>
         {
             ["SearchValue"] = Convert.ToString(AppConstants.InputModel.OtherInputs["PolicyNo"]),
@@ -40,15 +37,15 @@ public class PolicyDetailTask : BaseScrapingTask
         var document = await ExecuteStepAsync("Parse Policy Detail Document", async () =>
             await webScraper.ParseDocumentAsync(html, cancellationToken));
 
-        //var jsScriptContent = await ExecuteStepAsync("Load Javascript Extractor", () =>
-        //    Task.FromResult(Utilities.GetJsScript(GetType(), "getReportData.js")));
+        var jsScriptContent = await ExecuteStepAsync("Load Javascript", () =>
+            Task.FromResult(Utilities.GetJsScript(GetType(), "getPolicyInfo.js")));
 
-        //var result = await ExecuteStepAsync("Execute Report Extractor", () =>
-        //    Task.FromResult(document.ExecuteScript(jsScriptContent)));
+        var result = await ExecuteStepAsync("Execute Javascript", () =>
+            Task.FromResult(document.ExecuteScript(jsScriptContent)));
 
-        //var payments = await ExecuteStepAsync("Deserialize Payments Data", () =>
-        //    Task.FromResult(JsonSerializer.Deserialize<List<PaymentModel>>(result.ToString())));
+        var policyInfo = await ExecuteStepAsync("Deserialize Policy Info Data", () =>
+            Task.FromResult(JsonSerializer.Deserialize<PolicyInfoModel>(result.ToString())));
 
-        return null;
+        return policyInfo;
     }
 }

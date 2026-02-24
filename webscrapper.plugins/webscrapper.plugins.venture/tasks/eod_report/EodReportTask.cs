@@ -37,10 +37,10 @@ public class EodReportTask : BaseScrapingTask
         var document = await ExecuteStepAsync("Parse EOD Document", async () => 
             await webScraper.ParseDocumentAsync(html, cancellationToken));
 
-        var jsScriptContent = await ExecuteStepAsync("Load Javascript Extractor", () => 
+        var jsScriptContent = await ExecuteStepAsync("Load Javascript", () => 
             Task.FromResult(Utilities.GetJsScript(GetType(), "getReportData.js")));
 
-        var result = await ExecuteStepAsync("Execute Report Extractor", () => 
+        var result = await ExecuteStepAsync("Execute Javascript", () => 
             Task.FromResult(document.ExecuteScript(jsScriptContent)));
 
         var payments = await ExecuteStepAsync("Deserialize Payments Data", () => 

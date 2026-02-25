@@ -2,7 +2,6 @@
 using System.Text.Json;
 using webscrapper.plugins.common.classes;
 using webscrapper.plugins.common.interfaces;
-using webscrapper.plugins.common.shared;
 using webscrapper.plugins.venture.classes;
 using webscrapper.plugins.venture.shared;
 
@@ -38,7 +37,7 @@ public class AuthenticationTask : BaseScrapingTask
             Task.FromResult(document.ExecuteScript(jsScriptContent)));
 
         var formData = await ExecuteStepAsync("Deserialize Form Data", () => 
-            Task.FromResult(JsonSerializer.Deserialize<Dictionary<string, string>>(jsResult.ToString()) ?? new Dictionary<string, string>()));
+            Task.FromResult(JsonSerializer.Deserialize<Dictionary<string, string>>(jsResult.ToString())));
 
         formData["userloginid"] = AppConstants.InputModel.AgentCode;
         formData["userloginname"] = AppConstants.InputModel.Username;

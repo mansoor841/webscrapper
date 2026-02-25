@@ -1,6 +1,9 @@
-﻿using webscrapper.plugins.common.classes;
+﻿using AngleSharp.Js;
+using System.Text.Json;
+using webscrapper.plugins.common.classes;
 using webscrapper.plugins.common.interfaces;
 using webscrapper.plugins.common.shared;
+using webscrapper.plugins.venture.classes;
 using webscrapper.plugins.venture.shared;
 
 namespace webscrapper.plugins.venture.tasks.authentication;
@@ -26,10 +29,16 @@ public class AuthenticationTask : BaseScrapingTask
             await webScraper.GetAsync(loginUrl, cancellationToken: cancellationToken));
 
         var document = await ExecuteStepAsync("Parse Login Page", async () => 
-            await webScraper.ParseHtmlAsync(html, cancellationToken));
+            await webScraper.ParseDocumentAsync(html, cancellationToken));
 
-        var formData = await ExecuteStepAsync("Extract Form Data", () => 
-            Task.FromResult(document.ExtractFormData()));
+        var jsScriptContent = await ExecuteStepAsync("Load Javascript", () => 
+            Task.FromResult(Utilities.GetJsScript(GetType(), "getFormData.js")));
+
+        var jsResult = await ExecuteStepAsync("Execute Javascript", () => 
+            Task.FromResult(document.ExecuteScript(jsScriptContent)));
+
+        var formData = await ExecuteStepAsync("Deserialize Form Data", () => 
+            Task.FromResult(JsonSerializer.Deserialize<Dictionary<string, string>>(jsResult.ToString()) ?? new Dictionary<string, string>()));
 
         formData["userloginid"] = AppConstants.InputModel.AgentCode;
         formData["userloginname"] = AppConstants.InputModel.Username;

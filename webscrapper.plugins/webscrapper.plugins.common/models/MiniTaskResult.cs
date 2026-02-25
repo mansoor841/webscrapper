@@ -3,6 +3,7 @@ namespace webscrapper.plugins.common.models;
 public class MiniTaskResult
 {
     public required string TaskName { get; init; }
+    public long ElapsedMs { get; set; }
     public List<MiniTaskStepResult> Steps { get; init; } = new();
 }
 

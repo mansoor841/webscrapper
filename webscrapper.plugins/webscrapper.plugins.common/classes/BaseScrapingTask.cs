@@ -13,15 +13,20 @@ public abstract class BaseScrapingTask : IScrapingTask, IDisposable
 
     public virtual async Task<TaskResult> ExecuteAsync(CancellationToken cancellationToken = default)
     {
+        long start = Environment.TickCount64;
+        
         try
         {
             var result = await ExecuteCoreAsync(cancellationToken);
+            long elapsed = Environment.TickCount64 - start;
 
-            return TaskResult.SuccessResult(TaskName, result, _steps);
+            return TaskResult.SuccessResult(TaskName, result, _steps, elapsed);
         }
         catch (Exception ex)
         {
-            return TaskResult.FailureResult(TaskName, ex.Message, _steps);
+            long elapsed = Environment.TickCount64 - start;
+            
+            return TaskResult.FailureResult(TaskName, ex.Message, _steps, elapsed);
         }
     }
 

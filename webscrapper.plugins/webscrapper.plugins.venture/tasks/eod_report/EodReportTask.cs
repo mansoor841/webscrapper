@@ -20,6 +20,9 @@ public class EodReportTask : BaseScrapingTask
 
     protected override async Task<object> ExecuteCoreAsync(CancellationToken cancellationToken = default)
     {
+        _inputs["ReportStart"] = AppConstants.InputModel.StartDate;
+        _inputs["ReportEnd"] = AppConstants.InputModel.EndDate;
+
         var queryParams = new Dictionary<string, string>
         {
             ["view"] = EodConstants.View,

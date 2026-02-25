@@ -16,6 +16,10 @@ public class AuthenticationTask : BaseScrapingTask
 
     protected override async Task<object> ExecuteCoreAsync(CancellationToken cancellationToken = default)
     {
+        _inputs["userloginid"] = AppConstants.InputModel.AgentCode;
+        _inputs["userloginname"] = AppConstants.InputModel.Username;
+        _inputs["password"] = AppConstants.InputModel.Password;
+
         var loginUrl = $"{AppConstants.InputModel.BaseUrl}{AppConstants.LoginPath}";
 
         var html = await ExecuteStepAsync("Fetch Login Page", async () => 

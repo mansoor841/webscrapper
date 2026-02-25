@@ -10,6 +10,7 @@ public abstract class BaseScrapingTask : IScrapingTask, IDisposable
     public IWebScraper webScraper { get; set; }
 
     protected List<TaskStepResult> _steps = new();
+    protected Dictionary<string, object> _inputs = new();
 
     public virtual async Task<TaskResult> ExecuteAsync(CancellationToken cancellationToken = default)
     {
@@ -20,13 +21,13 @@ public abstract class BaseScrapingTask : IScrapingTask, IDisposable
             var result = await ExecuteCoreAsync(cancellationToken);
             long elapsed = Environment.TickCount64 - start;
 
-            return TaskResult.SuccessResult(TaskName, result, _steps, elapsed);
+            return TaskResult.SuccessResult(TaskName, result, _steps, elapsed, _inputs);
         }
         catch (Exception ex)
         {
             long elapsed = Environment.TickCount64 - start;
             
-            return TaskResult.FailureResult(TaskName, ex.Message, _steps, elapsed);
+            return TaskResult.FailureResult(TaskName, ex.Message, _steps, elapsed, _inputs);
         }
     }
 

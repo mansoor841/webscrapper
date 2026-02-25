@@ -20,6 +20,8 @@ public class PolicyDetailTask : BaseScrapingTask
 
     protected override async Task<object> ExecuteCoreAsync(CancellationToken cancellationToken = default)
     {
+        _inputs["PolicyNo"] = Convert.ToString(AppConstants.InputModel.OtherInputs["PolicyNo"]);
+
         var queryParams = new Dictionary<string, string>
         {
             ["SearchValue"] = Convert.ToString(AppConstants.InputModel.OtherInputs["PolicyNo"]),

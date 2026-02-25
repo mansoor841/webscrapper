@@ -9,11 +9,13 @@ public class TaskResult
     public List<TaskStepResult> Steps { get; init; } = new();
     public DateTime ExecutedAt { get; init; } = DateTime.UtcNow;
     public long ElapsedMs { get; init; }
+    public Dictionary<string, object> Inputs { get; set; } = new();
 
     public MiniTaskResult ToMini() => new()
     {
         TaskName = TaskName ?? "UnknownTask",
         ElapsedMs = ElapsedMs,
+        Inputs = Inputs,
         Steps = Steps.Select(s => new MiniTaskStepResult
         {
             StepName = s.StepName,
@@ -22,7 +24,7 @@ public class TaskResult
         }).ToList()
     };
 
-    public static TaskResult SuccessResult(string taskName, object data, List<TaskStepResult> steps, long elapsedMs) => new() { TaskName = taskName, Success = true, Data = data, Steps = steps, ElapsedMs = elapsedMs };
+    public static TaskResult SuccessResult(string taskName, object data, List<TaskStepResult> steps, long elapsedMs, Dictionary<string, object> inputs) => new() { TaskName = taskName, Success = true, Data = data, Steps = steps, ElapsedMs = elapsedMs, Inputs = inputs };
 
-    public static TaskResult FailureResult(string taskName, string error, List<TaskStepResult> steps, long elapsedMs) => new() { TaskName = taskName, Success = false, ErrorMessage = error, Steps = steps, ElapsedMs = elapsedMs };
+    public static TaskResult FailureResult(string taskName, string error, List<TaskStepResult> steps, long elapsedMs, Dictionary<string, object> inputs) => new() { TaskName = taskName, Success = false, ErrorMessage = error, Steps = steps, ElapsedMs = elapsedMs, Inputs = inputs };
 }

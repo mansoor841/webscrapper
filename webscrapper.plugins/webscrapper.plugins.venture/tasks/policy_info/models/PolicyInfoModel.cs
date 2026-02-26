@@ -1,4 +1,4 @@
-﻿namespace webscrapper.plugins.venture.tasks.policy_detail.models;
+﻿namespace webscrapper.plugins.venture.tasks.policy_info.models;
 
 public class PolicyInfoModel
 {

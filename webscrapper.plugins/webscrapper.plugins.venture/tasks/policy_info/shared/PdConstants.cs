@@ -1,4 +1,4 @@
-﻿namespace webscrapper.plugins.venture.tasks.policy_detail.shared;
+﻿namespace webscrapper.plugins.venture.tasks.policy_info.shared;
 
 public class PdConstants
 {

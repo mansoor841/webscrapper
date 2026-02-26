@@ -4,16 +4,16 @@ using webscrapper.plugins.common.classes;
 using webscrapper.plugins.common.interfaces;
 using webscrapper.plugins.venture.classes;
 using webscrapper.plugins.venture.shared;
-using webscrapper.plugins.venture.tasks.policy_detail.models;
-using webscrapper.plugins.venture.tasks.policy_detail.shared;
+using webscrapper.plugins.venture.tasks.policy_info.models;
+using webscrapper.plugins.venture.tasks.policy_info.shared;
 
-namespace webscrapper.plugins.venture.tasks.policy_detail;
+namespace webscrapper.plugins.venture.tasks.policy_info;
 
-public class PolicyDetailTask : BaseScrapingTask
+public class PolicyInfoTask : BaseScrapingTask
 {
-    public override string TaskName => "venture.policy_detail_task";
+    public override string TaskName => "venture.policy_info_task";
 
-    public PolicyDetailTask(IWebScraper _webScraper)
+    public PolicyInfoTask(IWebScraper _webScraper)
     {
         webScraper = _webScraper;
     }

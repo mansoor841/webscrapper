@@ -5,7 +5,7 @@ using webscrapper.plugins.venture.shared;
 using webscrapper.plugins.venture.tasks.authentication;
 using webscrapper.plugins.venture.tasks.eod_report;
 using webscrapper.plugins.venture.tasks.eod_report.models;
-using webscrapper.plugins.venture.tasks.policy_detail;
+using webscrapper.plugins.venture.tasks.policy_info;
 
 namespace webscrapper.plugins.venture;
 
@@ -48,7 +48,7 @@ public class VentureScrapper : BaseWebScraper
             {
                 AppConstants.InputModel.OtherInputs = new Dictionary<string, object>() { ["PolicyNo"] = payment.Policy };
 
-                var pdTask = new PolicyDetailTask(this);
+                var pdTask = new PolicyInfoTask(this);
                 var pdResult = await pdTask.ExecuteAsync(cancellationToken);
 
                 payment.PolicyInfo = pdResult.Data;
@@ -58,7 +58,7 @@ public class VentureScrapper : BaseWebScraper
         }
         else if (AppConstants.InputModel.JobType == VentureJobTypeEnum.UPDATE)
         {
-            var pdTask = new PolicyDetailTask(this);
+            var pdTask = new PolicyInfoTask(this);
             result = await pdTask.ExecuteAsync(cancellationToken);
 
             outputModel.TaskResults.Add(result.ToMini());

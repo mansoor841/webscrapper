@@ -46,9 +46,9 @@ public class EodReportTask : BaseScrapingTask
         var result = await ExecuteStepAsync("Execute Javascript", () => 
             Task.FromResult(document.ExecuteScript(jsScriptContent)));
 
-        var payments = await ExecuteStepAsync("Deserialize Data", () => 
+        var data = await ExecuteStepAsync("Deserialize Data", () => 
             Task.FromResult(JsonSerializer.Deserialize<List<PaymentModel>>(result.ToString())));
 
-        return payments;
+        return data;
     }
 }

@@ -11,20 +11,18 @@
     <None Remove="tasks\authentication\scripts\getFormData.js" />
     <None Remove="tasks\eod_report\scripts\getReportData.js" />
     <None Remove="tasks\policy_info\scripts\getPolicyInfo.js" />
+    <None Remove="tasks\vehicle_list\scripts\getVehicleList.js" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="tasks\authentication\scripts\getFormData.js" />
     <EmbeddedResource Include="tasks\eod_report\scripts\getReportData.js" />
     <EmbeddedResource Include="tasks\policy_info\scripts\getPolicyInfo.js" />
+    <EmbeddedResource Include="tasks\vehicle_list\scripts\getVehicleList.js" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\webscrapper.plugins.common\webscrapper.plugins.common.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="tasks\vehicle_list\models\" />
   </ItemGroup>
 
 </Project>

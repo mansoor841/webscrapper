@@ -5,6 +5,7 @@ using webscrapper.plugins.common.interfaces;
 using webscrapper.plugins.venture.classes;
 using webscrapper.plugins.venture.shared;
 using webscrapper.plugins.venture.tasks.policy_info.models;
+using webscrapper.plugins.venture.tasks.vehicle_list.models;
 using webscrapper.plugins.venture.tasks.vehicle_list.shared;
 
 namespace webscrapper.plugins.venture.tasks.vehicle_list;
@@ -20,25 +21,13 @@ public class VehicleListTask : BaseScrapingTask
 
     protected override async Task<object> ExecuteCoreAsync(CancellationToken cancellationToken = default)
     {
-        //ClaimID=&AGENTCODE=
-
-        //&=&=&=0&=&=&=&=VGAO-04172-000&AGENTCODE=&=
-
-        _inputs["PolicyNo"] = AppConstants.InputModel.OtherInputs["PolicyNo"];
+        _inputs["PolicyId"] = AppConstants.InputModel.OtherInputs["PolicyId"];
 
         var queryParams = new Dictionary<string, string>
         {
             ["view"] = VlConstants.View,
             ["Pages"] = VlConstants.Pages,
-            ["PolicyID"] = "",
-            ["DisplayAcctFrame"] = VlConstants.DisplayAcctFrame,
-            ["ViewPrefix"] = VlConstants.ViewPrefix,
-            ["SEARCHCLIENTNUMBER"] = VlConstants.SearchClientNumber,
-            ["MULTICLIENTSEARCH"] = VlConstants.MultiClientSearch,
-            ["FIELDNAMES"] = VlConstants.FieldNames,
-            ["LOOKUPTYPE"] = VlConstants.LookupType,
-            ["DOUBLECLICKSEARCHCAUTION"] = VlConstants.DoubleClickSearchCaution,
-            ["SEARCHVALUE"] = _inputs["PolicyNo"].ToString()
+            ["PolicyID"] = _inputs["PolicyId"].ToString()
         };
         var mainUrl = $"{AppConstants.InputModel.BaseUrl}{AppConstants.MainPath}";
 
@@ -49,14 +38,14 @@ public class VehicleListTask : BaseScrapingTask
             await webScraper.ParseDocumentAsync(html, cancellationToken));
 
         var jsScriptContent = await ExecuteStepAsync("Load Javascript", () =>
-            Task.FromResult(Utilities.GetJsScript(GetType(), "getPolicyInfo.js")));
+            Task.FromResult(Utilities.GetJsScript(GetType(), "getVehicleList.js")));
 
         var result = await ExecuteStepAsync("Execute Javascript", () =>
             Task.FromResult(document.ExecuteScript(jsScriptContent)));
 
-        var policyInfo = await ExecuteStepAsync("Deserialize Data", () =>
-            Task.FromResult(JsonSerializer.Deserialize<PolicyInfoModel>(result.ToString())));
+        var data = await ExecuteStepAsync("Deserialize Data", () =>
+            Task.FromResult(JsonSerializer.Deserialize<List<VehicleInfo>>(result.ToString())));
 
-        return policyInfo;
+        return data;
     }
 }

@@ -6,6 +6,7 @@ using webscrapper.plugins.venture.tasks.authentication;
 using webscrapper.plugins.venture.tasks.eod_report;
 using webscrapper.plugins.venture.tasks.eod_report.models;
 using webscrapper.plugins.venture.tasks.policy_info;
+using webscrapper.plugins.venture.tasks.policy_info.models;
 using webscrapper.plugins.venture.tasks.vehicle_list;
 
 namespace webscrapper.plugins.venture;
@@ -40,6 +41,11 @@ public class VentureScrapper : BaseWebScraper
 
         if (AppConstants.InputModel.JobType == VentureJobTypeEnum.TEST)
         {
+            var pdTask = new PolicyInfoTask(this);
+            result = await pdTask.ExecuteAsync(cancellationToken);
+
+            AppConstants.InputModel.OtherInputs.Add("PolicyId", ((PolicyInfoModel)result.Data).PolicyId);
+
             var vlTask = new VehicleListTask(this);
             result = await vlTask.ExecuteAsync(cancellationToken);
 

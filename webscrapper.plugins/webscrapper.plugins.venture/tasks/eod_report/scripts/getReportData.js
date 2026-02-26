@@ -1,5 +1,5 @@
-const PmntTable = document.querySelector(".PmntTable");
-const trs = PmntTable.querySelectorAll("tbody tr");
+const pmntTable = document.querySelector(".PmntTable");
+const trs = pmntTable.querySelectorAll("tbody tr");
 const resultList = [];
 
 for (var i = 0; i < trs.length; i++) {

@@ -11,6 +11,7 @@ public class BaseJobTypeEnum
         Name = name;
     }
 
+    public static readonly BaseJobTypeEnum TEST = new BaseJobTypeEnum(0, "TEST");
     public static readonly BaseJobTypeEnum AUTH = new BaseJobTypeEnum(1, "AUTH");
 
     public static bool operator ==(BaseJobTypeEnum a, BaseJobTypeEnum b) => a?.Value == b?.Value;

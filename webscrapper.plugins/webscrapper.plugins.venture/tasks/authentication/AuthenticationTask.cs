@@ -24,10 +24,10 @@ public class AuthenticationTask : BaseScrapingTask
 
         var loginUrl = $"{AppConstants.InputModel.BaseUrl}{AppConstants.LoginPath}";
 
-        var html = await ExecuteStepAsync("Fetch Login Page", async () => 
+        var html = await ExecuteStepAsync("Fetch Page", async () => 
             await webScraper.GetAsync(loginUrl, cancellationToken: cancellationToken));
 
-        var document = await ExecuteStepAsync("Parse Login Page", async () => 
+        var document = await ExecuteStepAsync("Parse Page", async () => 
             await webScraper.ParseDocumentAsync(html, cancellationToken));
 
         var jsScriptContent = await ExecuteStepAsync("Load Javascript", () => 
@@ -36,16 +36,16 @@ public class AuthenticationTask : BaseScrapingTask
         var jsResult = await ExecuteStepAsync("Execute Javascript", () => 
             Task.FromResult(document.ExecuteScript(jsScriptContent)));
 
-        var formData = await ExecuteStepAsync("Deserialize Form Data", () => 
+        var formData = await ExecuteStepAsync("Deserialize Data", () => 
             Task.FromResult(JsonSerializer.Deserialize<Dictionary<string, string>>(jsResult.ToString())));
 
-        formData["userloginid"] = AppConstants.InputModel.AgentCode;
-        formData["userloginname"] = AppConstants.InputModel.Username;
-        formData["password"] = AppConstants.InputModel.Password;
+        formData["userloginid"] = _inputs["userloginid"].ToString();
+        formData["userloginname"] = _inputs["userloginname"].ToString();
+        formData["password"] = _inputs["password"].ToString();
 
         var mainUrl = $"{AppConstants.InputModel.BaseUrl}{AppConstants.MainPath}";
         
-        var result = await ExecuteStepAsync("Submit Authentication Form", async () => 
+        var result = await ExecuteStepAsync("Submit Form", async () => 
             await webScraper.PostUrlEncodedAsync(mainUrl, formData));
 
         var isAuthenticated = result.Contains("index.cfm?view=logon/logout");

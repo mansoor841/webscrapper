@@ -1,6 +1,6 @@
 ﻿namespace webscrapper.plugins.venture.tasks.policy_info.shared;
 
-public class PdConstants
+public class PiConstants
 {
     public const string LookupType = "Policy";
     public const string View = "quicksearch";

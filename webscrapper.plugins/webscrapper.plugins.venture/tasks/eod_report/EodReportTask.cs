@@ -28,16 +28,16 @@ public class EodReportTask : BaseScrapingTask
             ["view"] = EodConstants.View,
             ["rpt"] = EodConstants.Rpt,
             ["ReportType"] = EodConstants.ReportType,
-            ["ReportStart"] = AppConstants.InputModel.StartDate,
-            ["ReportEnd"] = AppConstants.InputModel.EndDate,
+            ["ReportStart"] = _inputs["ReportStart"].ToString(),
+            ["ReportEnd"] = _inputs["ReportEnd"].ToString(),
             ["DateSelect"] = EodConstants.DateSelect
         };
         var mainUrl = $"{AppConstants.InputModel.BaseUrl}{AppConstants.MainPath}";
 
-        var html = await ExecuteStepAsync("Fetch EOD Report Page", async () => 
+        var html = await ExecuteStepAsync("Fetch Page", async () => 
             await webScraper.GetAsync(mainUrl, queryParams, cancellationToken));
 
-        var document = await ExecuteStepAsync("Parse EOD Document", async () => 
+        var document = await ExecuteStepAsync("Parse Document", async () => 
             await webScraper.ParseDocumentAsync(html, cancellationToken));
 
         var jsScriptContent = await ExecuteStepAsync("Load Javascript", () => 
@@ -46,7 +46,7 @@ public class EodReportTask : BaseScrapingTask
         var result = await ExecuteStepAsync("Execute Javascript", () => 
             Task.FromResult(document.ExecuteScript(jsScriptContent)));
 
-        var payments = await ExecuteStepAsync("Deserialize Payments Data", () => 
+        var payments = await ExecuteStepAsync("Deserialize Data", () => 
             Task.FromResult(JsonSerializer.Deserialize<List<PaymentModel>>(result.ToString())));
 
         return payments;

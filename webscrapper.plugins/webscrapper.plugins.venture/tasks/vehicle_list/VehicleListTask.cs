@@ -5,31 +5,40 @@ using webscrapper.plugins.common.interfaces;
 using webscrapper.plugins.venture.classes;
 using webscrapper.plugins.venture.shared;
 using webscrapper.plugins.venture.tasks.policy_info.models;
-using webscrapper.plugins.venture.tasks.policy_info.shared;
+using webscrapper.plugins.venture.tasks.vehicle_list.shared;
 
-namespace webscrapper.plugins.venture.tasks.policy_info;
+namespace webscrapper.plugins.venture.tasks.vehicle_list;
 
-public class PolicyInfoTask : BaseScrapingTask
+public class VehicleListTask : BaseScrapingTask
 {
-    public override string TaskName => "venture.policy_info_task";
+    public override string TaskName => "venture.vehical_list_task";
 
-    public PolicyInfoTask(IWebScraper _webScraper)
+    public VehicleListTask(IWebScraper _webScraper)
     {
         webScraper = _webScraper;
     }
 
     protected override async Task<object> ExecuteCoreAsync(CancellationToken cancellationToken = default)
     {
+        //ClaimID=&AGENTCODE=
+
+        //&=&=&=0&=&=&=&=VGAO-04172-000&AGENTCODE=&=
+
         _inputs["PolicyNo"] = AppConstants.InputModel.OtherInputs["PolicyNo"];
 
         var queryParams = new Dictionary<string, string>
         {
-            ["SearchValue"] = _inputs["PolicyNo"].ToString(),
-            ["lookuptype"] = PiConstants.LookupType,
-            ["view"] = PiConstants.View,
-            ["DisplayAcctFrame"] = PiConstants.DisplayAcctFrame,
-            ["MatchRule"] = PiConstants.MatchRule,
-            ["doubleclicksearchcaution"] = PiConstants.DoubleClickSearchCaution
+            ["view"] = VlConstants.View,
+            ["Pages"] = VlConstants.Pages,
+            ["PolicyID"] = "",
+            ["DisplayAcctFrame"] = VlConstants.DisplayAcctFrame,
+            ["ViewPrefix"] = VlConstants.ViewPrefix,
+            ["SEARCHCLIENTNUMBER"] = VlConstants.SearchClientNumber,
+            ["MULTICLIENTSEARCH"] = VlConstants.MultiClientSearch,
+            ["FIELDNAMES"] = VlConstants.FieldNames,
+            ["LOOKUPTYPE"] = VlConstants.LookupType,
+            ["DOUBLECLICKSEARCHCAUTION"] = VlConstants.DoubleClickSearchCaution,
+            ["SEARCHVALUE"] = _inputs["PolicyNo"].ToString()
         };
         var mainUrl = $"{AppConstants.InputModel.BaseUrl}{AppConstants.MainPath}";
 

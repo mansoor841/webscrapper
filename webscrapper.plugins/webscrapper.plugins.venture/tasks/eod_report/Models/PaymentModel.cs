@@ -14,4 +14,5 @@ public class PaymentModel
     public string? AgentID { get; set; }
 
     public object? PolicyInfo { get; set; }
+    public object? VehicleList { get; set; }
 }

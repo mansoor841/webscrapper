@@ -68,6 +68,15 @@ public class VentureScrapper : BaseWebScraper
                 payment.PolicyInfo = pdResult.Data;
 
                 outputModel.TaskResults.Add(pdResult.ToMini());
+
+                AppConstants.InputModel.OtherInputs.Add("PolicyId", ((PolicyInfoModel)pdResult.Data).PolicyId);
+
+                var vlTask = new VehicleListTask(this);
+                var vlResult = await vlTask.ExecuteAsync(cancellationToken);
+
+                payment.VehicleList = vlResult.Data;
+
+                outputModel.TaskResults.Add(vlResult.ToMini());
             }
         }
         else if (AppConstants.InputModel.JobType == VentureJobTypeEnum.UPDATE)

@@ -1,17 +1,17 @@
 ﻿using AngleSharp.Js;
+using CarrierFeedDownload.CrossCutting.Adapter.Interfaces;
 using System.Text.Json;
 using webscrapper.plugins.common.classes;
-using webscrapper.plugins.common.interfaces;
 using webscrapper.plugins.venture.classes;
 using webscrapper.plugins.venture.shared;
 
 namespace webscrapper.plugins.venture.tasks.authentication;
 
-public class AuthenticationTask : BaseScrapingTask
+public class AuthenticationTask : BaseAdapterTask
 {
     public override string TaskName => "venture.authentication_task";
 
-    public AuthenticationTask(IWebScraper _webScraper)
+    public AuthenticationTask(IAdapter _webScraper)
     {
         webScraper = _webScraper;
     }

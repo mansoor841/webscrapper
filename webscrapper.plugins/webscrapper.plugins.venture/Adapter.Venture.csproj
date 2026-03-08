@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\webscrapper.plugins.common\webscrapper.plugins.common.csproj" />
+    <ProjectReference Include="..\webscrapper.plugins.common\CarrierFeedDownload.CrossCutting.Adapter.csproj" />
   </ItemGroup>
 
 </Project>

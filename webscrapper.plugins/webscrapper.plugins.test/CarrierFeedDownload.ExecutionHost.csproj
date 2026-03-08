@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\webscrapper.plugins.venture\webscrapper.plugins.venture.csproj" />
+    <ProjectReference Include="..\webscrapper.plugins.venture\Adapter.Venture.csproj" />
   </ItemGroup>
 
 </Project>

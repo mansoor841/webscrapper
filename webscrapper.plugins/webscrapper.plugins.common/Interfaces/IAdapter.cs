@@ -1,9 +1,9 @@
 ﻿using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 
-namespace webscrapper.plugins.common.interfaces;
+namespace CarrierFeedDownload.CrossCutting.Adapter.Interfaces;
 
-public interface IWebScraper : IDisposable
+public interface IAdapter : IDisposable
 {
     Task<string> GetAsync(string url, Dictionary<string, string>? queryParams = null, CancellationToken cancellationToken = default);
     Task<string> PostAsync(string url, Dictionary<string, string> formData, CancellationToken cancellationToken = default);

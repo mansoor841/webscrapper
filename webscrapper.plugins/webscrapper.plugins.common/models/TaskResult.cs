@@ -1,4 +1,4 @@
-﻿namespace webscrapper.plugins.common.models;
+﻿namespace CarrierFeedDownload.CrossCutting.Adapter.Models;
 
 public class TaskResult
 {

@@ -1,5 +1,5 @@
-﻿using webscrapper.plugins.common.classes;
-using webscrapper.plugins.common.models;
+﻿using CarrierFeedDownload.CrossCutting.Adapter.Models;
+using webscrapper.plugins.common.classes;
 using webscrapper.plugins.venture.classes;
 using webscrapper.plugins.venture.shared;
 using webscrapper.plugins.venture.tasks.authentication;
@@ -11,17 +11,17 @@ using webscrapper.plugins.venture.tasks.vehicle_list;
 
 namespace webscrapper.plugins.venture;
 
-public class VentureScrapper : BaseWebScraper
+public class VentureAdapter : BaseAdapter
 {
-    public VentureScrapper() { }
+    public VentureAdapter() { }
 
-    public override async Task<PluginOutput> RunAsync(PluginInput inputModel, CancellationToken cancellationToken = default)
+    public override async Task<AdapterOutputModel> RunAsync(AdapterInputModel inputModel, CancellationToken cancellationToken = default)
     {
         long start = Environment.TickCount64;
 
         AppConstants.InputModel = inputModel;
 
-        var outputModel = new PluginOutput()
+        var outputModel = new AdapterOutputModel()
         {
             StartDate = AppConstants.InputModel.StartDate,
             EndDate = AppConstants.InputModel.EndDate

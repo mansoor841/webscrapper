@@ -2,7 +2,7 @@
 using webscrapper.plugins.venture;
 using webscrapper.plugins.venture.classes;
 
-var scrapper = new VentureScrapper();
+var scrapper = new VentureAdapter();
 var inputModel = new PluginInput()
 {
     BaseUrl = "https://ventureinsga.net",

@@ -1,6 +1,6 @@
-﻿namespace webscrapper.plugins.common.models;
+﻿namespace CarrierFeedDownload.CrossCutting.Adapter.Models;
 
-public class PluginOutput
+public class AdapterOutputModel
 {
     public string? StartDate { get; init; }
     public string? EndDate { get; init; }

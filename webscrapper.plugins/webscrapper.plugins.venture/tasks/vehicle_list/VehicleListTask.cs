@@ -1,7 +1,7 @@
 ﻿using AngleSharp.Js;
+using CarrierFeedDownload.CrossCutting.Adapter.Interfaces;
 using System.Text.Json;
 using webscrapper.plugins.common.classes;
-using webscrapper.plugins.common.interfaces;
 using webscrapper.plugins.venture.classes;
 using webscrapper.plugins.venture.shared;
 using webscrapper.plugins.venture.tasks.policy_info.models;
@@ -10,11 +10,11 @@ using webscrapper.plugins.venture.tasks.vehicle_list.shared;
 
 namespace webscrapper.plugins.venture.tasks.vehicle_list;
 
-public class VehicleListTask : BaseScrapingTask
+public class VehicleListTask : BaseAdapterTask
 {
     public override string TaskName => "venture.vehical_list_task";
 
-    public VehicleListTask(IWebScraper _webScraper)
+    public VehicleListTask(IAdapter _webScraper)
     {
         webScraper = _webScraper;
     }

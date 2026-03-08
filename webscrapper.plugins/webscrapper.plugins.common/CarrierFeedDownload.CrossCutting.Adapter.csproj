@@ -12,8 +12,4 @@
     <PackageReference Include="Flurl.Http" Version="4.0.2" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="shared\" />
-  </ItemGroup>
-
 </Project>

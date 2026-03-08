@@ -1,7 +1,7 @@
 ﻿using AngleSharp.Js;
+using CarrierFeedDownload.CrossCutting.Adapter.Interfaces;
 using System.Text.Json;
 using webscrapper.plugins.common.classes;
-using webscrapper.plugins.common.interfaces;
 using webscrapper.plugins.venture.classes;
 using webscrapper.plugins.venture.shared;
 using webscrapper.plugins.venture.tasks.eod_report.models;
@@ -9,11 +9,11 @@ using webscrapper.plugins.venture.tasks.eod_report.shared;
 
 namespace webscrapper.plugins.venture.tasks.eod_report;
 
-public class EodReportTask : BaseScrapingTask
+public class EodReportTask : BaseAdapterTask
 {
     public override string TaskName => "venture.eod_report_task";
 
-    public EodReportTask(IWebScraper _webScraper)
+    public EodReportTask(IAdapter _webScraper)
     {
         webScraper = _webScraper;
     }

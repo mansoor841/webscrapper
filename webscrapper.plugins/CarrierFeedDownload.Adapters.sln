@@ -3,15 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
 VisualStudioVersion = 18.2.11415.280
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "webscrapper.plugins.venture", "webscrapper.plugins.venture\webscrapper.plugins.venture.csproj", "{C4BF4BC3-D189-43F3-5DE3-22AC553B6517}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adapter.Venture", "webscrapper.plugins.venture\Adapter.Venture.csproj", "{C4BF4BC3-D189-43F3-5DE3-22AC553B6517}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "venture", "venture", "{6F6E25AB-06F8-4D29-BCAD-AA2430466997}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarrierFeedDownload.CrossCutting.Adapter", "webscrapper.plugins.common\CarrierFeedDownload.CrossCutting.Adapter.csproj", "{8F3031C1-66A1-269B-32C9-333A8609B5D2}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "common", "common", "{749C1349-A671-4B3A-906F-09B8854DEC60}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarrierFeedDownload.ExecutionHost", "webscrapper.plugins.test\CarrierFeedDownload.ExecutionHost.csproj", "{25618D97-9A8E-4A1E-A2CE-2164238A04C5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "webscrapper.plugins.common", "webscrapper.plugins.common\webscrapper.plugins.common.csproj", "{8F3031C1-66A1-269B-32C9-333A8609B5D2}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ExecutionHost", "ExecutionHost", "{BCCE6161-BB8F-4B00-B6CC-DAAE0F7E85CC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "webscrapper.plugins.test", "webscrapper.plugins.test\webscrapper.plugins.test.csproj", "{25618D97-9A8E-4A1E-A2CE-2164238A04C5}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CarrierAdapters", "CarrierAdapters", "{B6A6B99A-8203-45E1-9F33-C9691342BA87}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Venture", "Venture", "{05036763-C748-41DC-B96A-C168A6868AC3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CarrierAdaptersCommon", "CarrierAdaptersCommon", "{DAE61D28-0814-49EB-A829-8D8F8F57EE06}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,9 +40,10 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{C4BF4BC3-D189-43F3-5DE3-22AC553B6517} = {6F6E25AB-06F8-4D29-BCAD-AA2430466997}
-		{8F3031C1-66A1-269B-32C9-333A8609B5D2} = {749C1349-A671-4B3A-906F-09B8854DEC60}
-		{25618D97-9A8E-4A1E-A2CE-2164238A04C5} = {6F6E25AB-06F8-4D29-BCAD-AA2430466997}
+		{C4BF4BC3-D189-43F3-5DE3-22AC553B6517} = {05036763-C748-41DC-B96A-C168A6868AC3}
+		{8F3031C1-66A1-269B-32C9-333A8609B5D2} = {DAE61D28-0814-49EB-A829-8D8F8F57EE06}
+		{25618D97-9A8E-4A1E-A2CE-2164238A04C5} = {BCCE6161-BB8F-4B00-B6CC-DAAE0F7E85CC}
+		{05036763-C748-41DC-B96A-C168A6868AC3} = {B6A6B99A-8203-45E1-9F33-C9691342BA87}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {72805F42-3D23-4CC3-9BC2-7E772AC3372F}

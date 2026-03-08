@@ -2,19 +2,19 @@
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using AngleSharp.Html.Parser;
+using CarrierFeedDownload.CrossCutting.Adapter.Interfaces;
+using CarrierFeedDownload.CrossCutting.Adapter.Models;
 using Flurl.Http;
-using webscrapper.plugins.common.interfaces;
-using webscrapper.plugins.common.models;
 
 namespace webscrapper.plugins.common.classes;
 
-public abstract class BaseWebScraper : IWebScraper, IDisposable
+public abstract class BaseAdapter : IAdapter, IDisposable
 {
     protected CookieJar _cookieJar = new();
     protected HtmlParser _htmlParser { get; } = new();
     protected IBrowsingContext context { get; set; }
 
-    public BaseWebScraper()
+    public BaseAdapter()
     {
         var config = Configuration.Default
             .WithJs()
@@ -65,7 +65,7 @@ public abstract class BaseWebScraper : IWebScraper, IDisposable
         return await context.OpenAsync(req => req.Content(html), cancellationToken);
     }
 
-    public abstract Task<PluginOutput> RunAsync(PluginInput inputModel, CancellationToken cancellationToken = default);
+    public abstract Task<AdapterOutputModel> RunAsync(AdapterInputModel inputModel, CancellationToken cancellationToken = default);
 
     public void Dispose()
     {

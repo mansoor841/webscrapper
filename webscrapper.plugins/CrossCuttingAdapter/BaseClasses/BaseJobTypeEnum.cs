@@ -1,4 +1,4 @@
-﻿namespace webscrapper.plugins.common.classes;
+﻿namespace CarrierFeedDownload.CrossCutting.Adapter.BaseClasses;
 
 public class BaseJobTypeEnum
 {

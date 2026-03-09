@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
 VisualStudioVersion = 18.2.11415.280
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adapter.Venture", "webscrapper.plugins.venture\Adapter.Venture.csproj", "{C4BF4BC3-D189-43F3-5DE3-22AC553B6517}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adapter.Venture", "CarrierAdapters\Venture\Adapter.Venture.csproj", "{C4BF4BC3-D189-43F3-5DE3-22AC553B6517}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarrierFeedDownload.CrossCutting.Adapter", "webscrapper.plugins.common\CarrierFeedDownload.CrossCutting.Adapter.csproj", "{8F3031C1-66A1-269B-32C9-333A8609B5D2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarrierFeedDownload.CrossCutting.Adapter", "CrossCuttingAdapter\CarrierFeedDownload.CrossCutting.Adapter.csproj", "{8F3031C1-66A1-269B-32C9-333A8609B5D2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarrierFeedDownload.ExecutionHost", "webscrapper.plugins.test\CarrierFeedDownload.ExecutionHost.csproj", "{25618D97-9A8E-4A1E-A2CE-2164238A04C5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarrierFeedDownload.ExecutionHost", "ExecutionHost\CarrierFeedDownload.ExecutionHost.csproj", "{25618D97-9A8E-4A1E-A2CE-2164238A04C5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ExecutionHost", "ExecutionHost", "{BCCE6161-BB8F-4B00-B6CC-DAAE0F7E85CC}"
 EndProject
@@ -15,7 +15,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CarrierAdapters", "CarrierA
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Venture", "Venture", "{05036763-C748-41DC-B96A-C168A6868AC3}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CarrierAdaptersCommon", "CarrierAdaptersCommon", "{DAE61D28-0814-49EB-A829-8D8F8F57EE06}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CrossCuttingAdapter", "CrossCuttingAdapter", "{DAE61D28-0814-49EB-A829-8D8F8F57EE06}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

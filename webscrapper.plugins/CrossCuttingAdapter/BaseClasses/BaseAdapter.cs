@@ -6,7 +6,7 @@ using CarrierFeedDownload.CrossCutting.Adapter.Interfaces;
 using CarrierFeedDownload.CrossCutting.Adapter.Models;
 using Flurl.Http;
 
-namespace webscrapper.plugins.common.classes;
+namespace CarrierFeedDownload.CrossCutting.Adapter.BaseClasses;
 
 public abstract class BaseAdapter : IAdapter, IDisposable
 {
@@ -65,7 +65,7 @@ public abstract class BaseAdapter : IAdapter, IDisposable
         return await context.OpenAsync(req => req.Content(html), cancellationToken);
     }
 
-    public abstract Task<AdapterOutputModel> RunAsync(AdapterInputModel inputModel, CancellationToken cancellationToken = default);
+    public abstract Task<AdapterOutput> RunAsync(AdapterInput inputModel, CancellationToken cancellationToken = default);
 
     public void Dispose()
     {

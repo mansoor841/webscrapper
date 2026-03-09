@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace CarrierFeedDownload.CrossCutting.Adapter.Shared.Enums;
 
-public enum JobErrorTypeEnum
+public enum JobErrorType
 {
     [Display(Name = "No Error")]
     NoError = 0,

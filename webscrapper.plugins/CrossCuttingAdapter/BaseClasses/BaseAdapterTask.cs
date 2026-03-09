@@ -1,13 +1,13 @@
 ﻿using CarrierFeedDownload.CrossCutting.Adapter.Interfaces;
 using CarrierFeedDownload.CrossCutting.Adapter.Models;
 
-namespace webscrapper.plugins.common.classes;
+namespace CarrierFeedDownload.CrossCutting.Adapter.BaseClasses;
 
 public abstract class BaseAdapterTask : IAdapterTask, IDisposable
 {
     public abstract string TaskName { get; }
 
-    public IAdapter webScraper { get; set; }
+    public IAdapter adapter { get; set; }
 
     protected List<TaskStepResult> _steps = new();
     protected Dictionary<string, object> _inputs = new();

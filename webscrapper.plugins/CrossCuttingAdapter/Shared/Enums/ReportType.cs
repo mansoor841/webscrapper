@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CarrierFeedDownload.CrossCutting.Adapter.Shared.Enums;
 
-public enum ReportTypeEnum
+public enum ReportType
 {
     [Display(Name = "End of Day Report Job")]
     EODReportJob = 1,

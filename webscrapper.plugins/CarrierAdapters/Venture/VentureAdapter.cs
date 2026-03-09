@@ -1,5 +1,5 @@
-﻿using CarrierFeedDownload.CrossCutting.Adapter.Models;
-using webscrapper.plugins.common.classes;
+﻿using CarrierFeedDownload.CrossCutting.Adapter.BaseClasses;
+using CarrierFeedDownload.CrossCutting.Adapter.Models;
 using webscrapper.plugins.venture.classes;
 using webscrapper.plugins.venture.shared;
 using webscrapper.plugins.venture.tasks.authentication;
@@ -15,31 +15,31 @@ public class VentureAdapter : BaseAdapter
 {
     public VentureAdapter() { }
 
-    public override async Task<AdapterOutputModel> RunAsync(AdapterInputModel inputModel, CancellationToken cancellationToken = default)
+    public override async Task<AdapterOutput> RunAsync(AdapterInput input, CancellationToken cancellationToken = default)
     {
         long start = Environment.TickCount64;
 
-        AppConstants.InputModel = inputModel;
+        AppConstants.InputModel = input;
 
-        var outputModel = new AdapterOutputModel()
+        var output = new AdapterOutput()
         {
-            StartDate = AppConstants.InputModel.StartDate,
-            EndDate = AppConstants.InputModel.EndDate
+            StartDate = AppConstants.Input.StartDate,
+            EndDate = AppConstants.Input.EndDate
         };
         var authTask = new AuthenticationTask(this);
         var result = await authTask.ExecuteAsync(cancellationToken);
 
-        outputModel.TaskResults.Add(result.ToMini());
+        output.TaskResults.Add(result.ToMini());
 
         if (!result.Success)
         {
-            outputModel.ElapsedMs = Environment.TickCount64 - start;
-            outputModel.ErrorMessage = result.ErrorMessage;
+            output.ElapsedMs = Environment.TickCount64 - start;
+            output.ErrorMessage = result.ErrorMessage;
 
-            return outputModel;
+            return output;
         }
 
-        if (AppConstants.InputModel.JobType == VentureJobTypeEnum.TEST)
+        if (AppConstants.Input.JobType == VentureJobTypeEnum.TEST)
         {
             var pdTask = new PolicyInfoTask(this);
             result = await pdTask.ExecuteAsync(cancellationToken);

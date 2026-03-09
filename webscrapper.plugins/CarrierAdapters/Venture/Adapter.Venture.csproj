@@ -17,15 +17,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Tasks\Auth\scripts\getFormData.js" />
-    <None Remove="Tasks\EodReport\scripts\getReportData.js" />
+    <None Remove="Tasks\Auth\Scripts\GetData.js" />
+    <None Remove="Tasks\Auth\Scripts\getFormData.js" />
+    <None Remove="Tasks\EodReport\Scripts\getReportData.js" />
     <None Remove="tasks\policy_info\scripts\getPolicyInfo.js" />
     <None Remove="tasks\vehicle_list\scripts\getVehicleList.js" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Tasks\Auth\scripts\getFormData.js" />
-    <EmbeddedResource Include="Tasks\EodReport\scripts\getReportData.js" />
+    <EmbeddedResource Include="Tasks\Auth\Scripts\GetData.js" />
+    <EmbeddedResource Include="Tasks\EodReport\Scripts\getReportData.js" />
     <EmbeddedResource Include="tasks\policy_info\scripts\getPolicyInfo.js" />
     <EmbeddedResource Include="tasks\vehicle_list\scripts\getVehicleList.js" />
   </ItemGroup>

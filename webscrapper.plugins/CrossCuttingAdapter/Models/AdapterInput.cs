@@ -18,6 +18,7 @@ public class AdapterInput
     public required string ExtraParam5 { get; init; }
 
     public ReportType JobRunType { get; init; }
+    public JobErrorType JobErrorType { get; set; }
 
     public List<string> PolicyNoList { get; set; } = new();
 }

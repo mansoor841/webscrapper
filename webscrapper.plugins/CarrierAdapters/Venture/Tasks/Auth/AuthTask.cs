@@ -1,17 +1,16 @@
-﻿using Adapter.Venture.Classes;
-using Adapter.Venture.Shared;
+﻿using Adapter.Venture.Shared;
 using AngleSharp.Js;
 using CarrierFeedDownload.CrossCutting.Adapter.BaseClasses;
 using CarrierFeedDownload.CrossCutting.Adapter.Interfaces;
 using System.Text.Json;
 
-namespace webscrapper.plugins.venture.tasks.authentication;
+namespace Adapter.Venture.Tasks.Auth;
 
-public class AuthenticationTask : BaseAdapterTask
+public class AuthTask : BaseAdapterTask
 {
-    public override string TaskName => "venture.authentication_task";
+    public override string TaskName => "Venture.AuthTask";
 
-    public AuthenticationTask(IAdapter _adapter)
+    public AuthTask(IAdapter _adapter)
     {
         adapter = _adapter;
     }

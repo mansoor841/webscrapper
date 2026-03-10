@@ -6,9 +6,10 @@ public class TaskResult
     public bool Success { get; init; }
     public string? ErrorMessage { get; init; }
     public object? Data { get; init; }
-    public List<TaskStepResult> Steps { get; init; } = new();
     public DateTime ExecutedAt { get; init; } = DateTime.UtcNow;
     public long ElapsedMs { get; init; }
+
+    public List<TaskStepResult> Steps { get; init; } = new();
     public Dictionary<string, object> Inputs { get; set; } = new();
 
     public MiniTaskResult ToMini() => new()

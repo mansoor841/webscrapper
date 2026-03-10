@@ -1,13 +1,13 @@
 ﻿using System.Reflection;
 
-namespace Adapter.Venture.Classes;
+namespace Adapter.Venture.Shared;
 
 public static class Utilities
 {
     public static string GetJsScript(Type source, string filename)
     {
         var assembly = Assembly.GetExecutingAssembly();
-        var resourceName = source.Namespace + ".scripts." + filename;
+        var resourceName = source.Namespace + ".Scripts." + filename;
         var jsScript = string.Empty;
 
         using (Stream stream = assembly.GetManifestResourceStream(resourceName))

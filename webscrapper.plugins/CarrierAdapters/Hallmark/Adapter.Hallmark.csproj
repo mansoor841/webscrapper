@@ -1,0 +1,40 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Tasks\authentication\**" />
+    <Compile Remove="Tasks\eod_report\**" />
+    <Compile Remove="Tasks\policy_info\**" />
+    <Compile Remove="Tasks\vehicle_list\**" />
+    <EmbeddedResource Remove="Tasks\authentication\**" />
+    <EmbeddedResource Remove="Tasks\eod_report\**" />
+    <EmbeddedResource Remove="Tasks\policy_info\**" />
+    <EmbeddedResource Remove="Tasks\vehicle_list\**" />
+    <None Remove="Tasks\authentication\**" />
+    <None Remove="Tasks\eod_report\**" />
+    <None Remove="Tasks\policy_info\**" />
+    <None Remove="Tasks\vehicle_list\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Tasks\Auth\Scripts\GetData.js" />
+    <None Remove="Tasks\Auth\Scripts\getFormData.js" />
+    <None Remove="Tasks\EodReport\Scripts\getReportData.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Tasks\Auth\Scripts\GetData.js" />
+    <EmbeddedResource Include="Tasks\EodReport\Scripts\getReportData.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\CrossCuttingAdapter\CarrierFeedDownload.CrossCutting.Adapter.csproj" />
+  </ItemGroup>
+
+</Project>
